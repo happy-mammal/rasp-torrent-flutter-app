@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
@@ -12,7 +11,9 @@ class ThemeCubit extends Cubit<ThemeState> {
   Future<void> getAppTheme() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.getBool("isDark") != null) {
-      prefs.getBool("isDark")! ? emit(ThemeState(themeMode: ThemeMode.dark)) : emit(ThemeState(themeMode: ThemeMode.light));
+      prefs.getBool("isDark")!
+          ? emit(ThemeState(themeMode: ThemeMode.dark))
+          : emit(ThemeState(themeMode: ThemeMode.light));
     } else {
       emit(ThemeState(themeMode: ThemeMode.system));
     }
@@ -23,7 +24,9 @@ class ThemeCubit extends Cubit<ThemeState> {
 
     try {
       if (prefs.getBool("isDark") != null) {
-        prefs.getBool("isDark")! ? await prefs.setBool("isDark", false) : await prefs.setBool("isDark", true);
+        prefs.getBool("isDark")!
+            ? await prefs.setBool("isDark", false)
+            : await prefs.setBool("isDark", true);
         getAppTheme();
       } else {
         await prefs.setBool("isDark", false);
@@ -33,5 +36,4 @@ class ThemeCubit extends Cubit<ThemeState> {
       emit(ThemeState(themeMode: ThemeMode.system));
     }
   }
-
 }
