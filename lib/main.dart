@@ -23,13 +23,12 @@ class RaspTorrent extends StatefulWidget {
 }
 
 class _RaspTorrentState extends State<RaspTorrent> {
-
   @override
   Widget build(BuildContext context) {
     return Sizer(
       builder: (context, orientation, deviceType) {
         return BlocProvider<ThemeCubit>(
-          create: (context)=>ThemeCubit(),
+          create: (context) => ThemeCubit(),
           child: RaspApp(),
         );
       },
@@ -53,7 +52,8 @@ class _RaspAppState extends State<RaspApp> {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      themeMode: context.select((ThemeCubit themeCubit) => themeCubit.state.themeMode),
+      themeMode:
+          context.select((ThemeCubit themeCubit) => themeCubit.state.themeMode),
       onGenerateRoute: _appRouter.onGenerateRoute,
     );
   }
@@ -61,8 +61,6 @@ class _RaspAppState extends State<RaspApp> {
   @override
   void dispose() {
     _appRouter.dispose();
-    // TODO: implement dispose
     super.dispose();
   }
 }
-
