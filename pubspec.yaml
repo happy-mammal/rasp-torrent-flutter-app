@@ -1,7 +1,7 @@
 name: rasp_torrent_flutter_app
 description: A simple flutter application for project rasp torrent
 
-publish_to: 'none'
+publish_to: "none"
 
 version: 1.0.0+1
 
@@ -15,13 +15,14 @@ dependencies:
   google_fonts: ^2.1.0
   getwidget: ^2.0.3
   cupertino_icons: ^1.0.2
+  flutter_bloc: ^7.0.1
+  equatable: ^2.0.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
 flutter:
-
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
