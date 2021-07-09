@@ -32,7 +32,7 @@ class DownloadTile extends StatelessWidget {
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
                       fontStyle: FontStyle.normal,
-                      color: Colors.grey[900],
+
                     ),
                   ),
                   type: GFProgressType.circular,
@@ -55,7 +55,7 @@ class DownloadTile extends StatelessWidget {
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
                           fontStyle: FontStyle.normal,
-                          color: Colors.grey[900],
+
                         ),
                       ),
                       Text(
@@ -66,7 +66,7 @@ class DownloadTile extends StatelessWidget {
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
                           fontStyle: FontStyle.normal,
-                          color: Colors.grey[900],
+
                         ),
                       ),
                     ],
@@ -93,7 +93,9 @@ class DownloadTile extends StatelessWidget {
           ),
         ),
         decoration: BoxDecoration(
-            color: Colors.grey[200], borderRadius: BorderRadius.circular(10)),
+          color: Theme.of(context).canvasColor,
+          borderRadius: BorderRadius.circular(10),
+        ),
       ),
     );
   }

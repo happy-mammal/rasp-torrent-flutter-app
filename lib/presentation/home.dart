@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:getwidget/getwidget.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:rasp_torrent_flutter_app/business_logic/cubits/theme_cubit/theme_cubit.dart';
 import 'package:rasp_torrent_flutter_app/presentation/downloadqueue.dart';
 import 'package:rasp_torrent_flutter_app/presentation/finishedtorrent.dart';
-import 'package:rasp_torrent_flutter_app/widgets/downloadtile.dart';
 import 'package:sizer/sizer.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -14,6 +14,7 @@ class HomeScreen extends StatelessWidget {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+        backgroundColor: Theme.of(context).backgroundColor,
         appBar: AppBar(
           title: Text(
             "Rasp Torrent",
@@ -25,9 +26,11 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           actions: [
-            GestureDetector(onTap: () {}, child: Icon(Icons.add)),
+            GestureDetector(onTap: () {}, child: Icon(Icons.add,size: 30,color: Colors.white,)),
             SizedBox(width: 5.h),
-            GestureDetector(onTap: () {}, child: Icon(Icons.brightness_4)),
+            GestureDetector(onTap: () {
+              BlocProvider.of<ThemeCubit>(context).setAppTheme();
+            }, child: Icon(Icons.brightness_4,size: 30,color: Colors.white)),
             SizedBox(width: 5.h),
           ],
           bottom: TabBar(
@@ -59,7 +62,9 @@ class HomeScreen extends StatelessWidget {
             ],
           ),
         ),
-        drawer: Drawer(),
+        drawer: Drawer(
+
+        ),
         body: SafeArea(
           child: TabBarView(
             children: [DownloadQueue(), FinishedTorrent()],
