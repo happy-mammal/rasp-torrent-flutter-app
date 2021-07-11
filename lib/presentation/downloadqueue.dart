@@ -10,7 +10,8 @@ class DownloadQueue extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
+    bool isHas = false;
+
     return Padding(
       padding: const EdgeInsets.only(top: 20, bottom: 20),
       child: ListView.builder(
@@ -18,6 +19,11 @@ class DownloadQueue extends StatelessWidget {
         itemBuilder: (BuildContext buildContext, int index) {
           if (torrentlist[index].progress == 100) {
             return Container();
+          } else if (torrentlist[index].progress != 100) {
+            isHas = true;
+          }
+          if (isHas == false) {
+            return Text('empty');
           }
           return DownloadTile(torrent: torrentlist[index]);
         },
