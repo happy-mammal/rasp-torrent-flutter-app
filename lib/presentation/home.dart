@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rasp_torrent_flutter_app/business_logic/cubits/theme_cubit/theme_cubit.dart';
+import 'package:rasp_torrent_flutter_app/business_logic/gettorrenbloc/bloc/gettorrent_bloc.dart';
 import 'package:rasp_torrent_flutter_app/presentation/downloadqueue.dart';
 import 'package:rasp_torrent_flutter_app/presentation/finishedtorrent.dart';
 import 'package:sizer/sizer.dart';
@@ -72,9 +73,27 @@ class HomeScreen extends StatelessWidget {
         ),
         drawer: Drawer(),
         body: SafeArea(
-          child: TabBarView(
-            children: [DownloadQueue(), FinishedTorrent()],
-          ),
+          child: BlocConsumer<GetTorrentBloc, GetTorrentState>(
+              listener: (context, state) async {
+            if (state is GetTorrentSuccess) {
+              await Future.delayed(Duration(seconds: 1));
+              BlocProvider.of<GetTorrentBloc>(context).add(FetchTorrentEvent());
+            }
+            // do stuff here based on BlocA's state
+          }, builder: (context, state) {
+            if (state is GetTorrentSuccess) {
+              return TabBarView(
+                children: [
+                  DownloadQueue(torrentlist: state.torrentmodels),
+                  FinishedTorrent(torrentlist: state.torrentmodels)
+                ],
+              );
+            }
+            return TabBarView(children: [
+              CircularProgressIndicator(),
+              CircularProgressIndicator()
+            ]);
+          }),
         ),
       ),
     );
