@@ -10,6 +10,7 @@ class DownloadQueue extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return Padding(
       padding: const EdgeInsets.only(top: 20, bottom: 20),
       child: ListView.builder(

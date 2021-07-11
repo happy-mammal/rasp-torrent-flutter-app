@@ -25,9 +25,8 @@ class DownloadTile extends StatelessWidget {
                   radius: 60,
                   circleWidth: 4,
                   progressBarColor: Colors.green,
-                  animation: true,
-                  animationDuration: 1000,
-                  autoLive: true,
+                  animation: false,
+                  autoLive: false,
                   child: Text(
                     torrent.progress.toInt().toString() + '%',
                     style: GoogleFonts.poppins(
