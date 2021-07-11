@@ -26,11 +26,19 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           actions: [
-            GestureDetector(onTap: () {}, child: Icon(Icons.add,size: 30,color: Colors.white,)),
+            GestureDetector(
+                onTap: () {},
+                child: Icon(
+                  Icons.add,
+                  size: 30,
+                  color: Colors.white,
+                )),
             SizedBox(width: 5.h),
-            GestureDetector(onTap: () {
-              BlocProvider.of<ThemeCubit>(context).setAppTheme();
-            }, child: Icon(Icons.brightness_4,size: 30,color: Colors.white)),
+            GestureDetector(
+                onTap: () {
+                  BlocProvider.of<ThemeCubit>(context).setAppTheme();
+                },
+                child: Icon(Icons.brightness_4, size: 30, color: Colors.white)),
             SizedBox(width: 5.h),
           ],
           bottom: TabBar(
@@ -62,9 +70,7 @@ class HomeScreen extends StatelessWidget {
             ],
           ),
         ),
-        drawer: Drawer(
-
-        ),
+        drawer: Drawer(),
         body: SafeArea(
           child: TabBarView(
             children: [DownloadQueue(), FinishedTorrent()],

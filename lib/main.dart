@@ -7,9 +7,11 @@ import 'package:rasp_torrent_flutter_app/themes/app_theme.dart';
 
 import 'package:sizer/sizer.dart';
 
+import 'business_logic/blocdelegates/simpleblocdelegate.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  Bloc.observer = SimpleBlocDelegate();
   runApp(RaspTorrent());
 }
 
