@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:rasp_torrent_flutter_app/models/torrentmodel.dart';
 import 'package:sizer/sizer.dart';
 import 'package:getwidget/getwidget.dart';
 
 class DownloadTile extends StatelessWidget {
-  const DownloadTile({Key? key}) : super(key: key);
+  final TorrentModel torrent;
+  DownloadTile({Key? key, required this.torrent}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,7 @@ class DownloadTile extends StatelessWidget {
             children: [
               Expanded(
                 child: GFProgressBar(
-                  percentage: 1,
+                  percentage: torrent.progress.toInt() / 100,
                   radius: 60,
                   circleWidth: 4,
                   progressBarColor: Colors.green,
@@ -27,12 +29,11 @@ class DownloadTile extends StatelessWidget {
                   animationDuration: 1000,
                   autoLive: true,
                   child: Text(
-                    "100%",
+                    torrent.progress.toInt().toString() + '%',
                     style: GoogleFonts.poppins(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
                       fontStyle: FontStyle.normal,
-
                     ),
                   ),
                   type: GFProgressType.circular,
@@ -48,25 +49,29 @@ class DownloadTile extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Bloc From Zero To Hero ",
+                        torrent.title,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.poppins(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
                           fontStyle: FontStyle.normal,
-
                         ),
                       ),
                       Text(
-                        "10.00 GB",
+                        (torrent.totalSize > 1048576 &&
+                                torrent.totalSize < 1073741824)
+                            ? (torrent.totalSize ~/ 1048576).toString() + 'MB'
+                            : ((torrent.totalSize < 1073741824)
+                                ? (torrent.totalSize ~/ 1073741824).toString() +
+                                    'GB'
+                                : torrent.totalSize.toString()),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.poppins(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
                           fontStyle: FontStyle.normal,
-
                         ),
                       ),
                     ],

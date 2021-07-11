@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rasp_torrent_flutter_app/business_logic/gettorrenbloc/bloc/gettorrent_bloc.dart';
+import 'package:rasp_torrent_flutter_app/widgets/downloadtile.dart';
 
 class DownloadQueue extends StatefulWidget {
   const DownloadQueue({Key? key}) : super(key: key);
@@ -28,7 +29,15 @@ class _DownloadQueueState extends State<DownloadQueue> {
       // do stuff here based on BlocA's state
     }, builder: (context, state) {
       if (state is GetTorrentSuccess) {
-        return Text('success');
+        return Padding(
+          padding: const EdgeInsets.only(top: 20, bottom: 20),
+          child: ListView.builder(
+            itemCount: state.torrentmodels.length,
+            itemBuilder: (BuildContext buildContext, int index) {
+              return DownloadTile(torrent: state.torrentmodels[index]);
+            },
+          ),
+        );
       }
 
       return CircularProgressIndicator(); //MaterialButton(child: Text('hello'), onPressed: () {});
