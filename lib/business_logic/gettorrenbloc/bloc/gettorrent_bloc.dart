@@ -18,7 +18,13 @@ class GetTorrentBloc extends Bloc<GetTorrentEvent, GetTorrentState> {
     GetTorrentEvent event,
   ) async* {
     if (event is GetTorrentEvent) {
-      yield GetTorrentLoading();
+      if (state is GetTorrentSuccess) {
+        yield GetTorrentSuccess(
+            torrentmodels: (state as GetTorrentSuccess).torrentmodels);
+      } else {
+        yield GetTorrentLoading();
+      }
+
       try {
         print('1');
         final dynamic response = await torrentRepository.fetchTorrent();

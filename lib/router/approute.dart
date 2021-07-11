@@ -7,17 +7,18 @@ import 'package:rasp_torrent_flutter_app/repository/torrentrepository.dart';
 import 'package:http/http.dart' as http;
 
 class AppRouter {
-  final TorrentRepository repository = TorrentRepository(
-      torrentProvider: TorrentProvider(httpClient: http.Client()));
+  final gettorrenbloc = GetTorrentBloc(TorrentRepository(
+      torrentProvider: TorrentProvider(httpClient: http.Client())));
   Route? onGenerateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
       case '/':
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
-                create: (context) => GetTorrentBloc(repository),
-                child: HomeScreen()));
+                create: (context) => gettorrenbloc, child: HomeScreen()));
     }
   }
 
-  void dispose() {}
+  void dispose() {
+    gettorrenbloc.close();
+  }
 }
