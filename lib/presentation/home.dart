@@ -7,8 +7,20 @@ import 'package:rasp_torrent_flutter_app/presentation/downloadqueue.dart';
 import 'package:rasp_torrent_flutter_app/presentation/finishedtorrent.dart';
 import 'package:sizer/sizer.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    BlocProvider.of<GetTorrentBloc>(context).add(FetchTorrentEvent());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

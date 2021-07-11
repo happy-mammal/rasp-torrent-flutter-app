@@ -4,35 +4,27 @@ import 'package:rasp_torrent_flutter_app/business_logic/gettorrenbloc/bloc/getto
 import 'package:rasp_torrent_flutter_app/models/torrentmodel.dart';
 import 'package:rasp_torrent_flutter_app/widgets/downloadtile.dart';
 
-class DownloadQueue extends StatefulWidget {
+class DownloadQueue extends StatelessWidget {
   final List<TorrentModel> torrentlist;
   const DownloadQueue({Key? key, required this.torrentlist}) : super(key: key);
-
-  @override
-  _DownloadQueueState createState() => _DownloadQueueState();
-}
-
-class _DownloadQueueState extends State<DownloadQueue> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    BlocProvider.of<GetTorrentBloc>(context).add(FetchTorrentEvent());
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 20, bottom: 20),
       child: ListView.builder(
-        itemCount: widget.torrentlist.length,
+        itemCount: torrentlist.length,
         itemBuilder: (BuildContext buildContext, int index) {
-          return DownloadTile(torrent: widget.torrentlist[index]);
+          if (torrentlist[index].progress == 100) {
+            return Container();
+          }
+          return DownloadTile(torrent: torrentlist[index]);
         },
       ),
     );
-
-    // (
+  }
+}
+ // (
     //   child: Padding(
     //     padding: const EdgeInsets.only(top: 20, bottom: 20),
     //     child: ListView.builder(
@@ -43,8 +35,6 @@ class _DownloadQueueState extends State<DownloadQueue> {
     //     ),
     //   ),
     // );
-  }
-}
 // BlocConsumer<GetTorrentBloc, GetTorrentState>(
 //         listener: (context, state) async {
 //       if (state is GetTorrentSuccess) {
