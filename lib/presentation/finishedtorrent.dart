@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:rasp_torrent_flutter_app/models/torrentmodel.dart';
-import 'package:rasp_torrent_flutter_app/widgets/downloadtile.dart';
 
 import 'package:rasp_torrent_flutter_app/widgets/finishedtile.dart';
 
@@ -17,7 +16,7 @@ class FinishedTorrent extends StatelessWidget {
         itemCount: torrentlist.length,
         itemBuilder: (BuildContext buildContext, int index) {
           if (torrentlist[index].progress == 100) {
-            return DownloadTile(torrent: torrentlist[index]);
+            return FinishedTile(torrent: torrentlist[index]);
           }
           return Container();
         },

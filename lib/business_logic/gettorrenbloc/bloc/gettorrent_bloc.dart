@@ -21,23 +21,25 @@ class GetTorrentBloc extends Bloc<GetTorrentEvent, GetTorrentState> {
       if (state is GetTorrentSuccess) {
         yield GetTorrentSuccess(
             torrentmodels: (state as GetTorrentSuccess).torrentmodels);
+      } else if (state is GetTorrentEmpty) {
+        yield GetTorrentEmpty(
+            torrentmessage: (state as GetTorrentEmpty).torrentmessage);
+      } else if (state is GetTorrentFailed) {
+        yield GetTorrentFailed(
+            torrentmessage: (state as GetTorrentFailed).torrentmessage);
       } else {
         yield GetTorrentLoading();
       }
 
       try {
-        print('1');
         final dynamic response = await torrentRepository.fetchTorrent();
-        print('2');
-        print(response is TorrentMessage);
+
         if (response is List<TorrentModel>) {
           yield GetTorrentSuccess(torrentmodels: response);
         } else if (response is TorrentMessage) {
           yield GetTorrentEmpty(torrentmessage: response);
         }
       } catch (e) {
-        print(e.toString());
-        print('problem is here');
         yield GetTorrentFailed(
             torrentmessage: TorrentMessage(message: 'Something Went Wrong'));
       }

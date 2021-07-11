@@ -9,24 +9,38 @@ class DownloadQueue extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isHas = false;
-
+    int isHas = 0;
+    for (TorrentModel t in torrentlist) {
+      if (t.progress != 100) {
+        isHas = 1;
+      }
+    }
     return Padding(
       padding: const EdgeInsets.only(top: 20, bottom: 20),
-      child: ListView.builder(
-        itemCount: torrentlist.length,
-        itemBuilder: (BuildContext buildContext, int index) {
-          if (torrentlist[index].progress == 100) {
-            return Container();
-          } else if (torrentlist[index].progress != 100) {
-            isHas = true;
-          }
-          if (isHas == false) {
-            return Text('empty');
-          }
-          return DownloadTile(torrent: torrentlist[index]);
-        },
-      ),
+      child: (isHas == 0)
+          ? Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text('The Queue is Empty'),
+              ],
+            )
+          : ListView.builder(
+              itemCount: torrentlist.length,
+              itemBuilder: (BuildContext buildContext, int index) {
+                if (torrentlist[index].progress == 100) {
+                  return Container();
+                } else if (torrentlist[index].progress != 100) {
+                  isHas++;
+                  return DownloadTile(torrent: torrentlist[index]);
+                }
+
+                if (isHas == 0) {
+                  return Text('Empty');
+                }
+                print('this is happening');
+                return Container();
+              },
+            ),
     );
   }
 }

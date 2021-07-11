@@ -1,10 +1,15 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rasp_torrent_flutter_app/business_logic/cubits/theme_cubit/theme_cubit.dart';
 import 'package:rasp_torrent_flutter_app/business_logic/gettorrenbloc/bloc/gettorrent_bloc.dart';
 import 'package:rasp_torrent_flutter_app/presentation/downloadqueue.dart';
+import 'package:rasp_torrent_flutter_app/presentation/downloadqueuestatus.dart';
+import 'package:rasp_torrent_flutter_app/presentation/finishedqueuestatus.dart';
 import 'package:rasp_torrent_flutter_app/presentation/finishedtorrent.dart';
+import 'package:rasp_torrent_flutter_app/widgets/aboutdrawer.dart';
 import 'package:sizer/sizer.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -15,10 +20,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  Timer? timer;
   @override
   void initState() {
-    // TODO: implement initState
     BlocProvider.of<GetTorrentBloc>(context).add(FetchTorrentEvent());
+    timer = Timer.periodic(
+        Duration(seconds: 1),
+        (Timer t) =>
+            BlocProvider.of<GetTorrentBloc>(context).add(FetchTorrentEvent()));
     super.initState();
   }
 
@@ -63,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Text(
                   "Download Queue",
                   style: GoogleFonts.poppins(
-                    fontSize: 18,
+                    fontSize: 4.5.w,
                     fontWeight: FontWeight.w500,
                     fontStyle: FontStyle.normal,
                     color: Colors.white,
@@ -75,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Text(
                   "Finished",
                   style: GoogleFonts.poppins(
-                    fontSize: 18,
+                    fontSize: 4.5.w,
                     fontWeight: FontWeight.w500,
                     fontStyle: FontStyle.normal,
                     color: Colors.white,
@@ -85,212 +94,23 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
-        drawer: Drawer(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: 20.h,
-                child: Padding(
-                  padding: EdgeInsets.only(top: 13.h,left: 3.h),
-                  child: Text(
-                    "About devs",
-                    style: GoogleFonts.poppins(
-                      fontSize: 32,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                      fontStyle: FontStyle.normal,
-                    ),
-                  ),
-                ),
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("images/bg.jpg"),
-                    fit: BoxFit.cover
-                  ),
-                ),
-              ),
-              SizedBox(height: 1.h),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 2.h),
-                    child: CircleAvatar(
-                      radius: 4.h,
-                      backgroundImage: AssetImage("images/pravin.jpeg"),
-                    ),
-                  ),
-
-                  Padding(
-                    padding: EdgeInsets.only(left: 2.h),
-                    child: Text(
-                      "Pravin Nichal",
-                      style: GoogleFonts.poppins(
-                        fontSize: 22,
-                        fontWeight: FontWeight.w500,
-                        fontStyle: FontStyle.normal,
-                      ),
-                    ),
-                  ),
-
-                ],
-              ),
-              SizedBox(height: 3.h),
-              GestureDetector(
-                onTap: (){},
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(left: 4.h),
-                      child: SizedBox(
-                        width: 3.h,
-                        height: 3.h,
-                        child: Image.asset("images/instagram.png"),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 2.h),
-                      child: Text(
-                        "Instagram",
-                        style: GoogleFonts.poppins(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.normal,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 3.h),
-              GestureDetector(
-                onTap: (){},
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(left: 4.h),
-                      child: SizedBox(
-                        width: 3.h,
-                        height: 3.h,
-                        child: Image.asset("images/linkedin.png"),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 2.h),
-                      child: Text(
-                        "LinkedIn",
-                        style: GoogleFonts.poppins(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.normal,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 1.h),
-              Divider(),
-              SizedBox(height: 1.h),
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(left: 2.h),
-                      child: CircleAvatar(
-                          radius: 4.h,
-                          backgroundImage: AssetImage("images/yash.jpg"),
-                        ),
-                    ),
-
-                    Padding(
-                      padding: EdgeInsets.only(left: 2.h),
-                      child: Text(
-                            "Yash Lalit",
-                            style: GoogleFonts.poppins(
-                              fontSize: 22,
-                              fontWeight: FontWeight.w500,
-                              fontStyle: FontStyle.normal,
-                            ),
-                          ),
-                    ),
-
-                  ],
-                ),
-              SizedBox(height: 3.h),
-              GestureDetector(
-                onTap: (){},
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(left: 4.h),
-                      child: SizedBox(
-                        width: 3.h,
-                        height: 3.h,
-                        child: Image.asset("images/instagram.png"),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 2.h),
-                      child: Text(
-                        "Instagram",
-                        style: GoogleFonts.poppins(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.normal,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 3.h),
-              GestureDetector(
-                onTap: (){},
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(left: 4.h),
-                      child: SizedBox(
-                        width: 3.h,
-                        height: 3.h,
-                        child: Image.asset("images/linkedin.png"),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 2.h),
-                      child: Text(
-                        "LinkedIn",
-                        style: GoogleFonts.poppins(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.normal,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 1.h),
-              Divider(),
-
-            ],
-          ),
-        ),
+        drawer: AboutDrawer(),
         body: SafeArea(
           child: BlocConsumer<GetTorrentBloc, GetTorrentState>(
               listener: (context, state) async {
-            if (state is GetTorrentSuccess) {
-              await Future.delayed(Duration(seconds: 1));
-              BlocProvider.of<GetTorrentBloc>(context).add(FetchTorrentEvent());
-            }
+            // if (state is GetTorrentSuccess) {
+            //   await Future.delayed(Duration(seconds: 1));
+            //   BlocProvider.of<GetTorrentBloc>(context).add(FetchTorrentEvent());
+            // } else if (state is GetTorrentFailed) {
+            //   await Future.delayed(Duration(seconds: 1));
+            //   BlocProvider.of<GetTorrentBloc>(context).add(FetchTorrentEvent());
+            // } else if (state is GetTorrentEmpty) {
+            //   await Future.delayed(Duration(seconds: 1));
+            //   BlocProvider.of<GetTorrentBloc>(context).add(FetchTorrentEvent());
+            // }
+            // await Future.delayed(Duration(seconds: 1));
+            // BlocProvider.of<GetTorrentBloc>(context).add(FetchTorrentEvent());
+
             // do stuff here based on BlocA's state
           }, builder: (context, state) {
             if (state is GetTorrentSuccess) {
@@ -300,10 +120,20 @@ class _HomeScreenState extends State<HomeScreen> {
                   FinishedTorrent(torrentlist: state.torrentmodels)
                 ],
               );
+            } else if (state is GetTorrentFailed) {
+              return TabBarView(children: [
+                DownloadQueueStatus(isFailed: true, isEmpty: false),
+                FinishedQueueStatus(isFailed: true, isEmpty: false),
+              ]);
+            } else if (state is GetTorrentEmpty) {
+              return TabBarView(children: [
+                DownloadQueueStatus(isFailed: false, isEmpty: true),
+                FinishedQueueStatus(isFailed: false, isEmpty: true),
+              ]);
             }
             return TabBarView(children: [
-              CircularProgressIndicator(),
-              CircularProgressIndicator()
+              DownloadQueueStatus(isFailed: false, isEmpty: false),
+              FinishedQueueStatus(isFailed: false, isEmpty: false),
             ]);
           }),
         ),

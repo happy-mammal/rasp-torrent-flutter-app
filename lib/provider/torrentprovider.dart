@@ -24,7 +24,7 @@ class TorrentProvider {
     bool isList = json is List;
     if (!isList) {
       if (json.containsKey('message')) {
-        return torrentMessageFromJson(json);
+        return torrentMessageFromJson(response.body);
       }
     } else {
       return torrentModelFromJson(response.body);

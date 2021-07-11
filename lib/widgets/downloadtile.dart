@@ -12,7 +12,7 @@ class DownloadTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
+      padding: EdgeInsets.only(left: 2.w, right: 2.w, bottom: 2.h),
       child: Container(
         child: SizedBox(
           width: MediaQuery.of(context).size.width,
@@ -23,7 +23,7 @@ class DownloadTile extends StatelessWidget {
               Expanded(
                 child: GFProgressBar(
                   percentage: torrent.progress.toInt() / 100,
-                  radius: 60,
+                  radius: 15.w,
                   circleWidth: 4,
                   progressBarColor: Colors.green,
                   animation: false,
@@ -53,44 +53,47 @@ class DownloadTile extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.poppins(
-                          fontSize: 14,
+                          fontSize: 3.7.w,
                           fontWeight: FontWeight.w500,
                           fontStyle: FontStyle.normal,
                         ),
                       ),
-                      SizedBox(height: 0.8.h,),
+                      SizedBox(
+                        height: 0.8.h,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                           Text(
-                              (torrent.totalSize > 1048576 &&
-                                      torrent.totalSize < 1073741824)
-                                  ? (torrent.totalSize ~/ 1048576).toString() +
-                                      'MB'
-                                  : ((torrent.totalSize < 1073741824)
-                                      ? (torrent.totalSize ~/ 1073741824)
-                                              .toString() +
-                                          'GB'
-                                      : torrent.totalSize.toString()),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: GoogleFonts.poppins(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400,
-                                fontStyle: FontStyle.normal,
-                              ),
+                          Text(
+                            convertToString(),
+                            // (torrent.totalSize > 1048576 &&
+                            //         torrent.totalSize < 1073741824)
+                            //     ? (torrent.totalSize ~/ 1048576).toString() +
+                            //         'MB'
+                            //     : ((torrent.totalSize < 1073741824)
+                            //             ? (torrent.totalSize ~/ 1073741824)
+                            //                     .toString() +
+                            //                 'GB'
+                            //             : torrent.totalSize.toString()) +
+                            //         '/',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: GoogleFonts.poppins(
+                              fontSize: 3.7.w,
+                              fontWeight: FontWeight.w400,
+                              fontStyle: FontStyle.normal,
                             ),
-                         Text(
-                              "2 KB/s",
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: GoogleFonts.poppins(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400,
-                                fontStyle: FontStyle.normal,
-                              ),
+                          ),
+                          Text(
+                            "2 KB/s",
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: GoogleFonts.poppins(
+                              fontSize: 3.7.w,
+                              fontWeight: FontWeight.w400,
+                              fontStyle: FontStyle.normal,
                             ),
-
+                          ),
                         ],
                       ),
                     ],
@@ -122,5 +125,29 @@ class DownloadTile extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String convertToString() {
+    String downloadcompleted = '0';
+    String totalsize =
+        (torrent.totalSize > 1048576 && torrent.totalSize < 1073741824)
+            ? (torrent.totalSize ~/ 1048576).toString() + ' MB'
+            : ((torrent.totalSize < 1073741824)
+                ? (torrent.totalSize ~/ 1073741824).toString() + ' GB'
+                : torrent.totalSize.toString());
+
+    int totaldownloadinMB = (torrent.totalSize - torrent.leftUntilDone);
+    if (totaldownloadinMB < 1048576) {
+      downloadcompleted = '0';
+    } else {
+      downloadcompleted =
+          (totaldownloadinMB > 1048576 && totaldownloadinMB < 1073741824)
+              ? (totaldownloadinMB ~/ 1048576).toString() + '/'
+              : ((totaldownloadinMB < 1073741824)
+                  ? (totaldownloadinMB ~/ 1073741824).toString() + '/'
+                  : totaldownloadinMB.toString());
+    }
+    final String result = downloadcompleted + totalsize;
+    return result;
   }
 }
