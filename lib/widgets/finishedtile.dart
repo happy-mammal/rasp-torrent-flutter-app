@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:rasp_torrent_flutter_app/models/torrentmodel.dart';
 import 'package:sizer/sizer.dart';
 import 'package:getwidget/getwidget.dart';
 
 class FinishedTile extends StatelessWidget {
-  const FinishedTile({Key? key}) : super(key: key);
+  final TorrentModel torrent;
+  const FinishedTile({Key? key, required this.torrent}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,20 +21,18 @@ class FinishedTile extends StatelessWidget {
             children: [
               Expanded(
                 child: GFProgressBar(
-                  percentage: 1,
+                  percentage: torrent.progress.toInt() / 100,
                   radius: 60,
                   circleWidth: 4,
                   progressBarColor: Colors.green,
-                  animation: true,
-                  animationDuration: 1000,
-                  autoLive: true,
+                  animation: false,
+                  autoLive: false,
                   child: Text(
-                    "100%",
+                    torrent.progress.toInt().toString() + '%',
                     style: GoogleFonts.poppins(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
                       fontStyle: FontStyle.normal,
-
                     ),
                   ),
                   type: GFProgressType.circular,
@@ -48,26 +48,49 @@ class FinishedTile extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Bloc From Zero To Hero ",
+                        torrent.title,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.poppins(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
                           fontStyle: FontStyle.normal,
-
                         ),
                       ),
-                      Text(
-                        "10.00 GB",
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: GoogleFonts.poppins(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.normal,
+                      SizedBox(height: 0.8.h,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            (torrent.totalSize > 1048576 &&
+                                torrent.totalSize < 1073741824)
+                                ? (torrent.totalSize ~/ 1048576).toString() +
+                                'MB'
+                                : ((torrent.totalSize < 1073741824)
+                                ? (torrent.totalSize ~/ 1073741824)
+                                .toString() +
+                                'GB'
+                                : torrent.totalSize.toString()),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: GoogleFonts.poppins(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              fontStyle: FontStyle.normal,
+                            ),
+                          ),
+                          Text(
+                            "Seeding",
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: GoogleFonts.poppins(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              fontStyle: FontStyle.normal,
+                            ),
+                          ),
 
-                        ),
+                        ],
                       ),
                     ],
                   ),
