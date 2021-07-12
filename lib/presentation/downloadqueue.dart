@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rasp_torrent_flutter_app/business_logic/gettorrenbloc/bloc/gettorrent_bloc.dart';
+
 import 'package:rasp_torrent_flutter_app/models/torrentmodel.dart';
 import 'package:rasp_torrent_flutter_app/widgets/downloadtile.dart';
 

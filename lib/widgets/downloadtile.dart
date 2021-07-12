@@ -6,6 +6,7 @@ import 'package:getwidget/getwidget.dart';
 
 class DownloadTile extends StatelessWidget {
   final TorrentModel torrent;
+
   DownloadTile({Key? key, required this.torrent}) : super(key: key);
 
   @override
@@ -57,21 +58,40 @@ class DownloadTile extends StatelessWidget {
                           fontStyle: FontStyle.normal,
                         ),
                       ),
-                      Text(
-                        (torrent.totalSize > 1048576 &&
-                                torrent.totalSize < 1073741824)
-                            ? (torrent.totalSize ~/ 1048576).toString() + 'MB'
-                            : ((torrent.totalSize < 1073741824)
-                                ? (torrent.totalSize ~/ 1073741824).toString() +
-                                    'GB'
-                                : torrent.totalSize.toString()),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: GoogleFonts.poppins(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.normal,
-                        ),
+                      SizedBox(height: 0.8.h,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                           Text(
+                              (torrent.totalSize > 1048576 &&
+                                      torrent.totalSize < 1073741824)
+                                  ? (torrent.totalSize ~/ 1048576).toString() +
+                                      'MB'
+                                  : ((torrent.totalSize < 1073741824)
+                                      ? (torrent.totalSize ~/ 1073741824)
+                                              .toString() +
+                                          'GB'
+                                      : torrent.totalSize.toString()),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: GoogleFonts.poppins(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                                fontStyle: FontStyle.normal,
+                              ),
+                            ),
+                         Text(
+                              "2 KB/s",
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: GoogleFonts.poppins(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                                fontStyle: FontStyle.normal,
+                              ),
+                            ),
+
+                        ],
                       ),
                     ],
                   ),
