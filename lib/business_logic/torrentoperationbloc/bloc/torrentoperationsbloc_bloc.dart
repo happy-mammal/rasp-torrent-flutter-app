@@ -11,12 +11,54 @@ class TorrentOperationsBloc
     extends Bloc<TorrentOperationsEvent, TorrentOperationsState> {
   final TorrentOperationRepository torrentOperationRepository;
   TorrentOperationsBloc(this.torrentOperationRepository)
-      : super(TorrentoperationsblocInitial());
+      : super(TorrentOperationsInitial());
 
   @override
   Stream<TorrentOperationsState> mapEventToState(
     TorrentOperationsEvent event,
   ) async* {
+    if (event is AddTorrentEvent) {
+      final torrentMessage =
+          await torrentOperationRepository.addTorrent(event.magnetLink);
+      print(torrentMessage.message);
+      if (torrentMessage.message != 'Error') {
+        yield AddedTorrentSuccess();
+      } else {
+        yield AddedTorrentFailed();
+      }
+    } else if (event is PauseTorrentEvent) {
+      final torrentMessage =
+          await torrentOperationRepository.pauseTorrent(event.firebaseId);
+      if (torrentMessage.message != 'Error') {
+        yield PauseTorrentSuccess();
+      } else {
+        yield PauseTorrentFailed();
+      }
+    } else if (event is StartTorrentEvent) {
+      final torrentMessage =
+          await torrentOperationRepository.startTorrent(event.firebaseId);
+      if (torrentMessage.message != 'Error') {
+        yield StartTorrentSuccess();
+      } else {
+        yield StartTorrentFailed();
+      }
+    } else if (event is DeleteTorrentEvent) {
+      final torrentMessage =
+          await torrentOperationRepository.startTorrent(event.firebaseId);
+      if (torrentMessage.message != 'Error') {
+        yield DeleteTorrentSuccess();
+      } else {
+        yield DeleteTorrentFailed();
+      }
+    } else if (event is DeleteWithDataTorrentEvent) {
+      final torrentMessage =
+          await torrentOperationRepository.startTorrent(event.firebaseId);
+      if (torrentMessage.message != 'Error') {
+        yield DeleteWithDataTorrentSuccess();
+      } else {
+        yield DeleteWithDataTorrentFailed();
+      }
+    }
     // TODO: implement mapEventToState
   }
 }

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:rasp_torrent_flutter_app/business_logic/torrentoperationbloc/bloc/torrentoperationsbloc_bloc.dart';
 import 'package:sizer/sizer.dart';
 
 class AddTorrent extends StatelessWidget {
-  const AddTorrent({Key? key}) : super(key: key);
+  final magnetlinkcontroller = TextEditingController();
+  AddTorrent({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +15,7 @@ class AddTorrent extends StatelessWidget {
         title: Text(
           "Add Magnet Link",
           style: GoogleFonts.poppins(
-            fontSize: 18,
+            fontSize: 4.w,
             fontWeight: FontWeight.w400,
             fontStyle: FontStyle.normal,
             color: Colors.white,
@@ -20,61 +23,73 @@ class AddTorrent extends StatelessWidget {
         ),
       ),
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Padding(
-              padding: EdgeInsets.all(2.h),
-              child: TextField(
-                style: GoogleFonts.poppins(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  fontStyle: FontStyle.normal,
-                ),
-                keyboardType: TextInputType.visiblePassword,
-                cursorColor: Colors.green,
-                maxLines: 12,
-                decoration: InputDecoration(
-                  filled: true,
-                  isDense: true,
-                  hintText: "Past Magnet Link Here",
-                  hintStyle: GoogleFonts.poppins(
-                    fontSize: 16,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: EdgeInsets.all(2.h),
+                child: TextField(
+                  controller: magnetlinkcontroller,
+                  style: GoogleFonts.poppins(
+                    fontSize: 4.w,
                     fontWeight: FontWeight.w400,
                     fontStyle: FontStyle.normal,
                   ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5),
-                    borderSide: BorderSide.none,
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5),
-                    borderSide: BorderSide(color: Colors.green, width: 2),
+                  keyboardType: TextInputType.visiblePassword,
+                  cursorColor: Colors.green,
+                  maxLines: 15,
+                  decoration: InputDecoration(
+                    filled: true,
+                    isDense: true,
+                    hintText: "Past Magnet Link Here",
+                    hintStyle: GoogleFonts.poppins(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      fontStyle: FontStyle.normal,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      borderSide: BorderSide.none,
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      borderSide: BorderSide(color: Colors.green, width: 2),
+                    ),
                   ),
                 ),
               ),
-            ),
-            MaterialButton(
-              onPressed: () {},
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5),
-              ),
-              color: Colors.green,
-              child: Text(
-                "Add To Downloads",
-                style: GoogleFonts.poppins(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                  fontStyle: FontStyle.normal,
-                  color: Colors.white,
-                ),
-              ),
-              height: 6.h,
-              elevation: 10,
-
-            )
-          ],
+              BlocConsumer<TorrentOperationsBloc, TorrentOperationsState>(
+                  listener: (context, state) {
+                if (state is AddedTorrentSuccess) {
+                  Navigator.of(context).pop();
+                }
+              }, builder: (context, state) {
+                return MaterialButton(
+                  onPressed: () {
+                    BlocProvider.of<TorrentOperationsBloc>(context)
+                        .add(AddTorrentEvent(magnetlinkcontroller.text));
+                  },
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  color: Colors.green,
+                  child: Text(
+                    "Add To Downloads",
+                    style: GoogleFonts.poppins(
+                      fontSize: 5.w,
+                      fontWeight: FontWeight.w500,
+                      fontStyle: FontStyle.normal,
+                      color: Colors.white,
+                    ),
+                  ),
+                  height: 6.h,
+                  elevation: 10,
+                );
+              })
+            ],
+          ),
         ),
       ),
     );

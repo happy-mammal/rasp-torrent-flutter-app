@@ -22,6 +22,6 @@ class TorrentOperationRepository {
   }
 
   Future<TorrentMessage> addTorrent(magnetLink) async {
-    return torrentoperationsprovider.deletewithdataTorrent(magnetLink);
+    return torrentoperationsprovider.addTorrent(magnetLink);
   }
 }

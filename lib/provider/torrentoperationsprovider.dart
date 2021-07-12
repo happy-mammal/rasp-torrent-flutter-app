@@ -78,12 +78,13 @@ class TorrentOperationProvider {
     final url = '$_baseUrl/addTorrent';
 
     final response = await this.httpClient.post(
-          Uri.parse(url),
-          body: jsonEncode(<String, String>{
-            'magnetlinks': magnetLink,
-          }),
-        );
-
+      Uri.parse(url),
+      body: jsonEncode({
+        'magnetlinks': magnetLink,
+      }),
+      headers: {"Content-Type": "application/json"},
+    );
+    print(response.statusCode);
     if (response.statusCode != 200) {
       return TorrentMessage(message: 'Error');
     }

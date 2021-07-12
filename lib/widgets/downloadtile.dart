@@ -68,16 +68,6 @@ class DownloadTile extends StatelessWidget {
                         children: [
                           Text(
                             convertToString(),
-                            // (torrent.totalSize > 1048576 &&
-                            //         torrent.totalSize < 1073741824)
-                            //     ? (torrent.totalSize ~/ 1048576).toString() +
-                            //         'MB'
-                            //     : ((torrent.totalSize < 1073741824)
-                            //             ? (torrent.totalSize ~/ 1073741824)
-                            //                     .toString() +
-                            //                 'GB'
-                            //             : torrent.totalSize.toString()) +
-                            //         '/',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: GoogleFonts.poppins(

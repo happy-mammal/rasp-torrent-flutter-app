@@ -7,4 +7,24 @@ abstract class TorrentOperationsState extends Equatable {
   List<Object> get props => [];
 }
 
-class TorrentoperationsblocInitial extends TorrentOperationsState {}
+class TorrentOperationsInitial extends TorrentOperationsState {}
+
+class PauseTorrentSuccess extends TorrentOperationsState {}
+
+class PauseTorrentFailed extends TorrentOperationsState {}
+
+class StartTorrentSuccess extends TorrentOperationsState {}
+
+class StartTorrentFailed extends TorrentOperationsState {}
+
+class DeleteTorrentSuccess extends TorrentOperationsState {}
+
+class DeleteTorrentFailed extends TorrentOperationsState {}
+
+class DeleteWithDataTorrentSuccess extends TorrentOperationsState {}
+
+class DeleteWithDataTorrentFailed extends TorrentOperationsState {}
+
+class AddedTorrentSuccess extends TorrentOperationsState {}
+
+class AddedTorrentFailed extends TorrentOperationsState {}
