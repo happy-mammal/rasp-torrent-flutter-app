@@ -95,7 +95,7 @@ class DownloadTile extends StatelessWidget {
                 ),
               ),
               BlocBuilder<TorrentOperationsBloc, TorrentOperationsState>(
-                  builder: (context, state) {
+                  builder: (t, state) {
                 return GestureDetector(
                   onTap: () {
                     if (torrent.isPause == 1) {

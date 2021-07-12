@@ -43,7 +43,10 @@ class AppRouter {
       case '/addtorrent':
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
-            create: (context) => torrentOperationsBloc,
+            create: (context) => TorrentOperationsBloc(
+                TorrentOperationRepository(
+                    torrentoperationsprovider:
+                        TorrentOperationProvider(httpClient: http.Client()))),
             child: AddTorrent(),
           ),
         );
@@ -52,6 +55,5 @@ class AppRouter {
 
   void dispose() {
     gettorrenbloc.close();
-    torrentOperationsBloc.close();
   }
 }

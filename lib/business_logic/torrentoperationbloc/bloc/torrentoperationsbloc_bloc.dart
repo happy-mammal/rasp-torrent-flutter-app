@@ -27,8 +27,10 @@ class TorrentOperationsBloc
         yield AddedTorrentFailed();
       }
     } else if (event is PauseTorrentEvent) {
+      print('sadsad');
       final torrentMessage =
           await torrentOperationRepository.pauseTorrent(event.firebaseId);
+
       if (torrentMessage.message != 'Error') {
         yield PauseTorrentSuccess();
       } else {
@@ -51,6 +53,7 @@ class TorrentOperationsBloc
         yield DeleteTorrentFailed();
       }
     } else if (event is DeleteWithDataTorrentEvent) {
+      print('done');
       final torrentMessage = await torrentOperationRepository
           .deletewithdataTorrent(event.firebaseId);
       if (torrentMessage.message != 'Error') {
