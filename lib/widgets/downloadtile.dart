@@ -132,22 +132,26 @@ class DownloadTile extends StatelessWidget {
     String totalsize =
         (torrent.totalSize > 1048576 && torrent.totalSize < 1073741824)
             ? (torrent.totalSize ~/ 1048576).toString() + ' MB'
-            : ((torrent.totalSize < 1073741824)
-                ? (torrent.totalSize ~/ 1073741824).toString() + ' GB'
+            : ((torrent.totalSize > 1073741824)
+                ? (torrent.totalSize / 1073741824).toStringAsFixed(2) + ' GB'
                 : torrent.totalSize.toString());
 
     int totaldownloadinMB = (torrent.totalSize - torrent.leftUntilDone);
     if (totaldownloadinMB < 1048576) {
-      downloadcompleted = '0';
+      downloadcompleted = '0/';
+    } else if (torrent.totalSize > 1073741824) {
+      downloadcompleted =
+          (totaldownloadinMB / 1073741824).toStringAsFixed(2) + '/';
     } else {
       downloadcompleted =
           (totaldownloadinMB > 1048576 && totaldownloadinMB < 1073741824)
               ? (totaldownloadinMB ~/ 1048576).toString() + '/'
-              : ((totaldownloadinMB < 1073741824)
-                  ? (totaldownloadinMB ~/ 1073741824).toString() + '/'
-                  : totaldownloadinMB.toString());
+              : ((totaldownloadinMB > 1073741824)
+                  ? (totaldownloadinMB / 1073741824).toStringAsFixed(2) + '/'
+                  : totaldownloadinMB.toString() + '/');
     }
     final String result = downloadcompleted + totalsize;
+
     return result;
   }
 }
