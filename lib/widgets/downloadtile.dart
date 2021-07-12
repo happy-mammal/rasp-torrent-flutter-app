@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rasp_torrent_flutter_app/models/torrentmodel.dart';
@@ -42,7 +44,7 @@ class DownloadTile extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(right: 2.h),
                 child: SizedBox(
-                  width: 20.h,
+                  width: 50.w,
                   height: 9.h,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,17 +81,17 @@ class DownloadTile extends StatelessWidget {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: GoogleFonts.poppins(
-                              fontSize: 3.7.w,
+                              fontSize: 2.8.w,
                               fontWeight: FontWeight.w400,
                               fontStyle: FontStyle.normal,
                             ),
                           ),
                           Text(
-                            "2 KB/s",
+                            convertDownloadToString(),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: GoogleFonts.poppins(
-                              fontSize: 3.7.w,
+                              fontSize: 2.8.w,
                               fontWeight: FontWeight.w400,
                               fontStyle: FontStyle.normal,
                             ),
@@ -105,7 +107,7 @@ class DownloadTile extends StatelessWidget {
                 child: Icon(
                   Icons.pause_circle_filled_rounded,
                   color: Colors.grey[400],
-                  size: 30,
+                  size: 8.w,
                 ),
               ),
               Padding(
@@ -113,7 +115,7 @@ class DownloadTile extends StatelessWidget {
                 child: Icon(
                   Icons.delete_rounded,
                   color: Colors.redAccent,
-                  size: 30,
+                  size: 8.w,
                 ),
               ),
             ],
@@ -121,7 +123,7 @@ class DownloadTile extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           color: Theme.of(context).canvasColor,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(2.w),
         ),
       ),
     );
@@ -153,5 +155,21 @@ class DownloadTile extends StatelessWidget {
     final String result = downloadcompleted + totalsize;
 
     return result;
+  }
+
+  String convertDownloadToString() {
+    double roundDouble(double value, int places) {
+      num mod = pow(10.0, places);
+      return ((value * mod).round().toDouble() / mod);
+    }
+
+    double truespeed = roundDouble(torrent.rateDownloaded / 1024, 2);
+    String downspeed = (truespeed < 1 && truespeed < 1024)
+        ? (truespeed / 1024).toStringAsFixed(1) + ' KB/S'
+        : ((truespeed > 1024)
+            ? (truespeed / 1024).toStringAsFixed(2) + ' MB/S'
+            : (truespeed).toString() + ' KB/S');
+
+    return downspeed;
   }
 }

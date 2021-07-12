@@ -11,7 +11,7 @@ class FinishedTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
+      padding: EdgeInsets.only(left: 2.w, right: 2.w, bottom: 2.h),
       child: Container(
         child: SizedBox(
           width: MediaQuery.of(context).size.width,
@@ -41,7 +41,7 @@ class FinishedTile extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(right: 2.h),
                 child: SizedBox(
-                  width: 20.h,
+                  width: 50.w,
                   height: 9.h,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,20 +57,22 @@ class FinishedTile extends StatelessWidget {
                           fontStyle: FontStyle.normal,
                         ),
                       ),
-                      SizedBox(height: 0.8.h,),
+                      SizedBox(
+                        height: 0.8.h,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
                             (torrent.totalSize > 1048576 &&
-                                torrent.totalSize < 1073741824)
+                                    torrent.totalSize < 1073741824)
                                 ? (torrent.totalSize ~/ 1048576).toString() +
-                                'MB'
-                                : ((torrent.totalSize < 1073741824)
-                                ? (torrent.totalSize ~/ 1073741824)
-                                .toString() +
-                                'GB'
-                                : torrent.totalSize.toString()),
+                                    ' MB'
+                                : ((torrent.totalSize > 1073741824)
+                                    ? (torrent.totalSize / 1073741824)
+                                            .toStringAsFixed(2) +
+                                        ' GB'
+                                    : torrent.totalSize.toString()),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: GoogleFonts.poppins(
@@ -80,7 +82,7 @@ class FinishedTile extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            "Seeding",
+                            torrent.status.capitalize(),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: GoogleFonts.poppins(
@@ -89,7 +91,6 @@ class FinishedTile extends StatelessWidget {
                               fontStyle: FontStyle.normal,
                             ),
                           ),
-
                         ],
                       ),
                     ],
@@ -99,9 +100,9 @@ class FinishedTile extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(right: 2.h),
                 child: Icon(
-                  Icons.pause_circle_filled_rounded,
+                  Icons.stop,
                   color: Colors.grey[400],
-                  size: 30,
+                  size: 8.w,
                 ),
               ),
               Padding(
@@ -121,5 +122,11 @@ class FinishedTile extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+extension StringExtension on String {
+  String capitalize() {
+    return "${this[0].toUpperCase()}${this.substring(1)}";
   }
 }
