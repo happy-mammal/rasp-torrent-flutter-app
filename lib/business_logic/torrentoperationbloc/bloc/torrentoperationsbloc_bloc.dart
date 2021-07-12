@@ -44,15 +44,15 @@ class TorrentOperationsBloc
       }
     } else if (event is DeleteTorrentEvent) {
       final torrentMessage =
-          await torrentOperationRepository.startTorrent(event.firebaseId);
+          await torrentOperationRepository.deleteTorrent(event.firebaseId);
       if (torrentMessage.message != 'Error') {
         yield DeleteTorrentSuccess();
       } else {
         yield DeleteTorrentFailed();
       }
     } else if (event is DeleteWithDataTorrentEvent) {
-      final torrentMessage =
-          await torrentOperationRepository.startTorrent(event.firebaseId);
+      final torrentMessage = await torrentOperationRepository
+          .deletewithdataTorrent(event.firebaseId);
       if (torrentMessage.message != 'Error') {
         yield DeleteWithDataTorrentSuccess();
       } else {

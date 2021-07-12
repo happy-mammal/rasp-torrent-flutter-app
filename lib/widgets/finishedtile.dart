@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:rasp_torrent_flutter_app/business_logic/torrentoperationbloc/bloc/torrentoperationsbloc_bloc.dart';
 import 'package:rasp_torrent_flutter_app/models/torrentmodel.dart';
 import 'package:sizer/sizer.dart';
 import 'package:getwidget/getwidget.dart';
@@ -97,14 +99,38 @@ class FinishedTile extends StatelessWidget {
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.only(right: 2.h),
-                child: Icon(
-                  Icons.stop,
-                  color: Colors.grey[400],
-                  size: 8.w,
-                ),
-              ),
+              BlocBuilder<TorrentOperationsBloc, TorrentOperationsState>(
+                  builder: (context, state) {
+                return GestureDetector(
+                  onTap: () {
+                    if (torrent.isPause == 1) {
+                      BlocProvider.of<TorrentOperationsBloc>(context)
+                          .add(PauseTorrentEvent(torrent.firebaseId));
+                    } else {
+                      BlocProvider.of<TorrentOperationsBloc>(context)
+                          .add(StartTorrentEvent(torrent.firebaseId));
+                    }
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.only(right: 2.h),
+                    child: Icon(
+                      (torrent.isPause == 1)
+                          ? Icons.stop
+                          : Icons.play_circle_fill_rounded,
+                      color: Colors.grey[400],
+                      size: 8.w,
+                    ),
+                  ),
+                );
+              }),
+              // Padding(
+              //   padding: EdgeInsets.only(right: 2.h),
+              //   child: Icon(
+              //     Icons.stop,
+              //     color: Colors.grey[400],
+              //     size: 8.w,
+              //   ),
+              // ),
               Padding(
                 padding: EdgeInsets.only(right: 2.h),
                 child: Icon(
@@ -130,3 +156,67 @@ extension StringExtension on String {
     return "${this[0].toUpperCase()}${this.substring(1)}";
   }
 }
+// BlocBuilder<TorrentOperationsBloc, TorrentOperationsState>(
+//                   builder: (context, state) {
+//                 return GestureDetector(
+//                   onTap: () {
+//                     if (torrent.isPause == 1) {
+//                       BlocProvider.of<TorrentOperationsBloc>(context)
+//                           .add(PauseTorrentEvent(torrent.firebaseId));
+//                       isPause = true;
+//                     } else {
+//                       BlocProvider.of<TorrentOperationsBloc>(context)
+//                           .add(StartTorrentEvent(torrent.firebaseId));
+//                     }
+//                   },
+//                   child: Padding(
+//                     padding: EdgeInsets.only(right: 2.h),
+//                     child: Icon(
+//                       (torrent.isPause == 1)
+//                           ? Icons.pause_circle_filled_rounded
+//                           : Icons.play_circle_fill_rounded,
+//                       color: Colors.grey[400],
+//                       size: 8.w,
+//                     ),
+//                   ),
+//                 );
+//               }),
+//               GestureDetector(
+//                 onTap: () {
+//                   showDialog(
+//                       context: context,
+//                       builder: (t) {
+//                         return SimpleDialog(
+//                           title: Text('Choose Option'),
+//                           children: [
+//                             SimpleDialogOption(
+//                               onPressed: () {
+//                                 BlocProvider.of<TorrentOperationsBloc>(context)
+//                                     .add(
+//                                         DeleteTorrentEvent(torrent.firebaseId));
+//                                 Navigator.of(t).pop();
+//                               },
+//                               child: Text('Delete from list'),
+//                             ),
+//                             SimpleDialogOption(
+//                               onPressed: () {
+//                                 BlocProvider.of<TorrentOperationsBloc>(context)
+//                                     .add(DeleteWithDataTorrentEvent(
+//                                         torrent.firebaseId));
+//                                 Navigator.of(t).pop();
+//                               },
+//                               child: Text('Delete from list and delete data'),
+//                             )
+//                           ],
+//                         );
+//                       });
+//                 },
+//                 child: Padding(
+//                   padding: EdgeInsets.only(right: 2.h),
+//                   child: Icon(
+//                     Icons.delete_rounded,
+//                     color: Colors.redAccent,
+//                     size: 8.w,
+//                   ),
+//                 ),
+//               ),

@@ -60,7 +60,7 @@ class TorrentOperationProvider {
 
   Future<TorrentMessage> deletewithdataTorrent(firebaseId) async {
     final url = '$_baseUrl/deletewithdata/$firebaseId';
-
+    print('===========================' + url);
     final response = await this.httpClient.get(Uri.parse(url));
 
     if (response.statusCode != 200) {
