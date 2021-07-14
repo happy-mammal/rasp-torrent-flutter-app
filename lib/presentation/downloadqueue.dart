@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:sizer/sizer.dart';
 import 'package:rasp_torrent_flutter_app/models/torrentmodel.dart';
 import 'package:rasp_torrent_flutter_app/widgets/downloadtile.dart';
 
@@ -16,7 +16,7 @@ class DownloadQueue extends StatelessWidget {
       }
     }
     return Padding(
-      padding: const EdgeInsets.only(top: 20, bottom: 20),
+      padding: EdgeInsets.only(top: 1.5.h, bottom: 1.5.h),
       child: (isHas == 0)
           ? Column(
               mainAxisAlignment: MainAxisAlignment.start,

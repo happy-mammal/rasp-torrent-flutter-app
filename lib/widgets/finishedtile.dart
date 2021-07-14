@@ -131,12 +131,43 @@ class FinishedTile extends StatelessWidget {
               //     size: 8.w,
               //   ),
               // ),
-              Padding(
-                padding: EdgeInsets.only(right: 2.h),
-                child: Icon(
-                  Icons.delete_rounded,
-                  color: Colors.redAccent,
-                  size: 30,
+              GestureDetector(
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (t) {
+                        return SimpleDialog(
+                          title: Text('Choose Option'),
+                          children: [
+                            SimpleDialogOption(
+                              onPressed: () {
+                                BlocProvider.of<TorrentOperationsBloc>(context)
+                                    .add(
+                                        DeleteTorrentEvent(torrent.firebaseId));
+                                Navigator.of(t).pop();
+                              },
+                              child: Text('Delete from list'),
+                            ),
+                            SimpleDialogOption(
+                              onPressed: () {
+                                BlocProvider.of<TorrentOperationsBloc>(context)
+                                    .add(DeleteWithDataTorrentEvent(
+                                        torrent.firebaseId));
+                                Navigator.of(t).pop();
+                              },
+                              child: Text('Delete from list and delete data'),
+                            )
+                          ],
+                        );
+                      });
+                },
+                child: Padding(
+                  padding: EdgeInsets.only(right: 2.h),
+                  child: Icon(
+                    Icons.delete_rounded,
+                    color: Colors.redAccent,
+                    size: 30,
+                  ),
                 ),
               ),
             ],
